@@ -1,0 +1,41 @@
+server:
+  port: ${FFAPP_AUTH_SVC_PORT}
+
+spring:
+  rabbitmq:
+    host: ${FFAPP_TOOLS_LOADBALANCER_IP}
+    port: ${FFAPP_TOOLS_RABBITMQ_PORT}
+    username: ${FFAPP_TOOLS_ADMIN_USERNAME}
+    password: ${FFAPP_TOOLS_ADMIN_PASSWORD}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${FFAPP_TOOLS_LOADBALANCER_IP}:${FFAPP_TOOLS_POSTGRES_PORT}/authdb
+    username: ${FFAPP_TOOLS_POSTGRES_USERNAME}
+    password: ${FFAPP_TOOLS_ADMIN_PASSWORD}
+  redis:
+    host: ${FFAPP_TOOLS_LOADBALANCER_IP}
+    port: ${FFAPP_TOOLS_REDIS_PORT}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      format-sql: true
+  zipkin:
+    enabled: true
+    base-url: ${FFAPP_TOOLS_LOADBALANCER_IP_HTTP}:${FFAPP_TOOLS_ZIPKIN_PORT}
+    service:
+      name: auth-service
+
+ffapp:
+  userservice: ${FFAPP_HOST_IP}:${FFAPP_PROFILE_SVC_PORT}
+
+
+logging:
+  level:
+    root: info
+    org.springframework.boot: info
+    com.bilgeadam: debug
+  file:
+    name: auth-service.log
+#    path: \\server\\logs\\configserver\\

@@ -1,0 +1,22 @@
+server:
+  port: ${FFAPP_WEB_SVC_PORT}
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: ${FFAPP_TOOLS_LOADBALANCER_IP_HTTP}:${FFAPP_TOOLS_ZIPKIN_PORT}
+    service:
+      name: config-server
+
+s3:
+  accesskey: ${FFAPP_AWS_S3_ACCESSKEY}
+  secretkey: ${FFAPP_AWS_S3_SECRETKEY}
+
+logging:
+  level:
+    root: info
+    org.springframework.boot: info
+    com.bilgeadam: debug
+  file:
+    name: webservice.log
+#    path: \\server\\logs\\configserver\\

@@ -1,0 +1,32 @@
+server:
+  port: ${FFAPP_CONFIG_SERVER_PORT}
+
+spring:
+
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/services
+  security:
+    user:
+      name: ${FFAPP_TOOLS_ADMIN_USERNAME}
+      password: ${FFAPP_TOOLS_ADMIN_PASSWORD}
+  zipkin:
+    enabled: true
+    base-url: ${FFAPP_TOOLS_LOADBALANCER_IP_HTTP}:${FFAPP_TOOLS_ZIPKIN_PORT}
+    service:
+      name: config-server
+
+logging:
+  level:
+    root: info
+    org.springframework.boot: info
+    com.bilgeadam: debug
+  file:
+    name: configserver.log
+#    path: \\server\\logs\\configserver\\

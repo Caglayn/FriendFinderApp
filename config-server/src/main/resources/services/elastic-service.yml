@@ -1,0 +1,16 @@
+server:
+  port: ${FFAPP_ELASTIC_SVC_PORT}
+
+spring:
+  elasticsearch:
+    uris: ${FFAPP_TOOLS_LOADBALANCER_IP}:${FFAPP_TOOLS_ELASTIC_PORT_1}
+  rabbitmq:
+    host: ${FFAPP_TOOLS_LOADBALANCER_IP}
+    port: ${FFAPP_TOOLS_RABBITMQ_PORT}
+    username: ${FFAPP_TOOLS_ADMIN_USERNAME}
+    password: ${FFAPP_TOOLS_ADMIN_PASSWORD}
+  zipkin:
+    enabled: true
+    base-url: ${FFAPP_TOOLS_LOADBALANCER_IP_HTTP}:${FFAPP_TOOLS_ZIPKIN_PORT}
+    service:
+      name: elastic-service

@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      username: ${FFAPP_TOOLS_ADMIN_USERNAME}
+      password: ${FFAPP_TOOLS_ADMIN_PASSWORD}
+      uri: ${FFAPP_HOST_IP_HTTP}:${FFAPP_CONFIG_SERVER_PORT}
+  config:
+    import: "configserver:"
+  application:
+    name: auth-service

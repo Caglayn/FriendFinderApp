@@ -1,0 +1,30 @@
+server:
+  port: ${FFAPP_PROFILE_SVC_PORT}
+
+spring:
+  rabbitmq:
+    host: ${FFAPP_TOOLS_LOADBALANCER_IP}
+    port: ${FFAPP_TOOLS_RABBITMQ_PORT}
+    username: ${FFAPP_TOOLS_ADMIN_USERNAME}
+    password: ${FFAPP_TOOLS_ADMIN_PASSWORD}
+  data:
+    mongodb:
+      database: ${FFAPP_PROFILE_SVC_MONGO_DBNAME}
+      username: ${FFAPP_PROFILE_SVC_MONGO_DBUSERNAME}
+      password: ${FFAPP_PROFILE_SVC_MONGO_DBPASSWORD}
+      host: ${FFAPP_TOOLS_LOADBALANCER_IP}
+      port: ${FFAPP_TOOLS_MONGODB_PORT}
+  zipkin:
+    enabled: true
+    base-url: ${FFAPP_TOOLS_LOADBALANCER_IP_HTTP}:${FFAPP_TOOLS_ZIPKIN_PORT}
+    service:
+      name: user-service
+
+logging:
+  level:
+    root: info
+    org.springframework.boot: info
+    com.bilgeadam: debug
+  file:
+    name: user-service.log
+#    path: \\server\\logs\\configserver\\

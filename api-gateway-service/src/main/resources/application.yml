@@ -1,0 +1,80 @@
+server:
+  port: 3333
+
+spring:
+  main:
+    web-application-type: reactive
+  zipkin:
+    enabled: true
+    base-url: http://34.116.157.28:9411/
+    service:
+      name: api-gateway-service
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: http://192.168.1.49:8091
+          predicates:
+            - Path=/v1/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback
+        - id: user-service-follow
+          uri: http://192.168.1.2:8090
+          predicates:
+            - Path=/v1/follow/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback
+        - id: user-service-post
+          uri: http://192.168.1.2:8090
+          predicates:
+            - Path=/v1/post/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback
+        - id: user-service-user
+          uri: http://192.168.1.2:8090
+          predicates:
+            - Path=/v1/user/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback
+        - id: user-service-profile
+          uri: http://192.168.1.2:8090
+          predicates:
+            - Path=/v1/profile/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback
+        - id: web-service
+          uri: http://192.168.1.2:80
+          predicates:
+            - Path=/web/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback
+            - RewritePath=/web/?(?<segment>.*), /$\{segment}
+
+logging:
+  level:
+    root: warn
+    org.springframework.boot: info
+    com.bilgeadam: debug
+  file:
+    name: apigatewayservice.log
+#    path: \\server\\logs\\configserver\\
